@@ -1,46 +1,52 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class auth extends CI_Controller{
+class Auth extends CI_Controller {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('auth_model');
+        $this->load->model('Auth_model');
     }
 
     public function index()
     {
+        // Jika sudah login, langsung ke dashboard
+        if ($this->session->userdata('login')) {
+            redirect('dashboard');
+        }
         $this->load->view('auth/login');
     }
 
     public function login()
     {
-        $username= $this->input->post('username');
-        $password=$this->input->post('password');
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
 
-        $user= $this->auth_model->cek_login($username, $password);
+        $user = $this->Auth_model->cek_login($username, $password);
 
-        if($user){
-            $data=[
-                'id_user'=> $user->id,
-                'username'=> $user->username,
-                'role'=> $user->role,
-                'login'=> TRUE
+        if ($user) {
+            // Kolom PK tabel users adalah "id"
+            $data = [
+                'id_users' => $user->id,
+                'nama'     => $user->nama,
+                'username' => $user->username,
+                'role'     => $user->role,
+                'login'    => TRUE
             ];
 
             $this->session->set_userdata($data);
-
-            $this->auth_model->update_last_login($user->id);
             redirect('dashboard');
-        }else{
-            $this->session->set_flashdata('error', 'Username dan password salah');
-            redirect('login');
+
+        } else {
+            $this->session->set_flashdata('error', 'Username atau Password Salah!');
+            redirect('auth');
         }
     }
+
     public function logout()
     {
         $this->session->sess_destroy();
-        redirect('login');
+        redirect('auth');
     }
 }

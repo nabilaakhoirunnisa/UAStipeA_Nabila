@@ -1,74 +1,84 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-    <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-laugh-wink"></i>
-    </div>
-    <div class="sidebar-brand-text mx-3">Perpustakaan</div>
-</a>
-<hr class="sidebar-divider my-0">
-
-<li class="nav-item active">
-    <a class="nav-link" href="<?= site_url('dashboard') ?>">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span>
+    <!-- Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= site_url('dashboard') ?>">
+        <div class="sidebar-brand-text mx-3">
+            PT Maju Jaya
+            <small>Sales Order System</small>
+        </div>
     </a>
-</li>
 
-<hr class="sidebar-divider my-0">
+    <hr class="sidebar-divider my-0">
 
-    <li class="nav-item">
-        <a class="nav-link" href="<?= site_url('kategori'); ?>">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Kategori</span>
+    <!-- Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="<?= site_url('dashboard') ?>">
+            <i class="fas fa-fw fa-th-large"></i>
+            <span>Dashboard</span>
         </a>
     </li>
 
-<hr class="sidebar-divider my-0">
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">Master Data</div>
 
-<li class="nav-item">
-    <a class="nav-link" href="<?= site_url('anggota'); ?>">
-        <i class="fas fa-fw fa-users"></i>
-        <span>anggota</span>
-    </a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= site_url('produk') ?>">
+            <i class="fas fa-fw fa-box-open"></i>
+            <span>Produk</span>
+        </a>
+    </li>
 
-<li class="nav-item">
-    <a class="nav-link" href="<?= site_url('buku'); ?>">
-        <i class="fas fa-fw fa-book"></i>
-        <span>buku</span>
-    </a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= site_url('pelanggan') ?>">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Pelanggan</span>
+        </a>
+    </li>
 
-<li class="nav-item">
-    <a class="nav-link" href="<?= site_url('peminjaman'); ?>">
-        <i class="fas fa-fw fa-box"></i>
-        <span>peminjaman</span>
-    </a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= site_url('users') ?>">
+            <i class="fas fa-fw fa-user-shield"></i>
+            <span>Manajemen User</span>
+        </a>
+    </li>
 
-<hr class="sidebar-divider d-none d-md-block">
-<li class="nav-item">
-    <a class="nav-link" href="<?= site_url('laporan/peminjaman'); ?>">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Laporan Peminjaman</span>
-    </a>
-</li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">Transaksi</div>
 
-<li class="nav-item">
-    <a class="nav-link" href="<?= site_url('laporan/anggota'); ?>">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Laporan Anggota</span>
-    </a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= site_url('sales_order') ?>">
+            <i class="fas fa-fw fa-file-invoice"></i>
+            <span>Sales Order</span>
+        </a>
+    </li>
 
-<li class="nav-item">
-    <a class="nav-link" href="<?= site_url('laporan/buku'); ?>">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Laporan Buku</span>
-    </a>
-</li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">Laporan</div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="<?= site_url('laporan/penjualan') ?>">
+            <i class="fas fa-fw fa-chart-bar"></i>
+            <span>Laporan Penjualan</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="<?= site_url('laporan/produk') ?>">
+            <i class="fas fa-fw fa-chart-line"></i>
+            <span>Laporan per Produk</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="<?= site_url('laporan/sales') ?>">
+            <i class="fas fa-fw fa-user-chart"></i>
+            <span>Laporan per Sales</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
 
 </ul>
+
 <div id="content-wrapper" class="d-flex flex-column">
     <div id="content">

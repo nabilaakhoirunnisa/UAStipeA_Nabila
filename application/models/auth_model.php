@@ -1,21 +1,26 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class auth_model extends CI_Model{
+class Auth_model extends CI_Model {
 
-    public function cek_login($username, $password)
+    public function __construct()
     {
-        return $this->db->get_where('users', [
-            'username'=>$username,
-            'password'=>md5($password)
-        ])->row();
+        parent::__construct();
     }
 
-    public function update_last_login($id)
+    /**
+     * Cek login berdasarkan username & password
+     * Struktur tabel users: id, nama, username, password, role
+     */
+    public function cek_login($username, $password)
     {
-        $this->db->where('id', $id);
-        $this->db->update('users', [
-            'last_login'=>date('Y-m-d H:i:s')
-        ]);
+        $this->db->where('username', $username);
+        $this->db->where('password', $password); // ganti md5() jika password di-hash
+        $query = $this->db->get('users');
+
+        if ($query->num_rows() == 1) {
+            return $query->row();
+        }
+        return false;
     }
 }
