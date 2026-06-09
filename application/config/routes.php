@@ -75,3 +75,11 @@ $route['manajemen_users/hapus/(:num)'] = 'manajemen_users/hapus/$1';
 $route['sales_order'] = 'sales_order';
 $route['sales_order/tambah'] = 'sales_order/tambah';
 $route['sales_order/detail/(:num)'] = 'sales_order/detail/$1';
+
+$route['sales_order/tambah_produk/(:num)'] = 'sales_order/tambah_produk/$1';
+$route['sales_order/hapus_produk/(:num)']  = 'sales_order/hapus_produk/$1';
+
+$route['sales_order/ubah_status/(:num)'] = 'sales_order/ubah_status/$1';
+
+$route['laporan/cetak_produk'] = 'laporan/cetak_produk';
+$route['laporan/cetak_sales']  = 'laporan/cetak_sales';

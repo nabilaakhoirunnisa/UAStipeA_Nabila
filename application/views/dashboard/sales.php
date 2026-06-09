@@ -4,72 +4,24 @@
 
 <div class="row">
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-6 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <h6 class="font-weight-bold text-primary">
-                    Order Saya
+                    Total Sales Order Saya
                 </h6>
                 <h3><?= $order_saya; ?></h3>
             </div>
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <h6 class="font-weight-bold text-warning">
-                    Draft
-                </h6>
-                <h3><?= $draft; ?></h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <h6 class="font-weight-bold text-info">
-                    Dikirim
-                </h6>
-                <h3><?= $dikirim; ?></h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-6 col-md-6 mb-4">
         <div class="card border-left-success shadow h-100 py-2">
             <div class="card-body">
                 <h6 class="font-weight-bold text-success">
-                    Selesai
+                    Order Selesai
                 </h6>
                 <h3><?= $selesai; ?></h3>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="row">
-
-    <div class="col-xl-6 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <h6 class="font-weight-bold text-primary">
-                    Total Produk
-                </h6>
-                <h3><?= $total_produk; ?></h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-6 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <h6 class="font-weight-bold text-success">
-                    Total Pelanggan
-                </h6>
-                <h3><?= $total_pelanggan; ?></h3>
             </div>
         </div>
     </div>
@@ -87,19 +39,47 @@
     <div class="card-body">
 
         <p>
-            Selamat datang
+            Selamat datang,
             <strong><?= $this->session->userdata('username'); ?></strong>.
         </p>
 
         <p>
-            Anda dapat membuat Sales Order baru, melihat status order,
-            serta memantau transaksi pelanggan melalui menu Sales Order.
+            Anda dapat membuat Sales Order baru dan melihat Sales Order
+            yang menjadi tanggung jawab Anda.
         </p>
+
+        <a href="<?= base_url('sales_order/tambah'); ?>"
+           class="btn btn-success">
+            <i class="fas fa-plus"></i> Buat Sales Order
+        </a>
 
         <a href="<?= base_url('sales_order'); ?>"
            class="btn btn-primary">
-            Kelola Sales Order
+            <i class="fas fa-list"></i> Lihat Sales Order
         </a>
+
+    </div>
+
+</div>
+
+<div class="card shadow">
+
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Panduan Singkat
+        </h6>
+    </div>
+
+    <div class="card-body">
+
+        <ol>
+            <li>Buat Sales Order baru.</li>
+            <li>Pilih pelanggan.</li>
+            <li>Tambahkan produk ke transaksi.</li>
+            <li>Masukkan jumlah (qty).</li>
+            <li>Simpan transaksi.</li>
+            <li>Pantau status Sales Order.</li>
+        </ol>
 
     </div>
 

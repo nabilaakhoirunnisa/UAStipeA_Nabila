@@ -1,2 +1,0 @@
-# UAStipeA_Nabila
-
