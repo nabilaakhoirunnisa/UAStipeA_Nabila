@@ -29,33 +29,52 @@ class Dashboard extends CI_Controller {
             $this->load->view('dashboard/admin', $data);
             $this->load->view('templates/footer');
 
-        }elseif($role == 'sales'){
+}elseif($role == 'sales'){
 
-            $id_sales = $this->session->userdata('id_users');
+    $id_sales = $this->session->userdata('id_users');
 
-            $data['order_saya'] = $this->db
-                ->where('id_sales', $id_sales)
-                ->count_all_results('sales_order');
+    $data['order_saya'] = $this->db
+        ->where('id_sales', $id_sales)
+        ->count_all_results('sales_order');
 
-            $data['total_produk'] = $this->db->count_all('produk');
+    $data['draft'] = $this->db
+        ->where('id_sales', $id_sales)
+        ->where('status', 'draft')
+        ->count_all_results('sales_order');
 
-            $this->load->view('templates/header');
-            $this->load->view('templates/sidebar');
-            $this->load->view('templates/topbar');
-            $this->load->view('dashboard/sales', $data);
-            $this->load->view('templates/footer');
+    $data['dikirim'] = $this->db
+        ->where('id_sales', $id_sales)
+        ->where('status', 'dikirim')
+        ->count_all_results('sales_order');
 
-        }elseif($role == 'manager'){
+    $data['selesai'] = $this->db
+        ->where('id_sales', $id_sales)
+        ->where('status', 'selesai')
+        ->count_all_results('sales_order');
 
-            $data['total_order']     = $this->db->count_all('sales_order');
-            $data['total_produk']    = $this->db->count_all('produk');
-            $data['total_pelanggan'] = $this->db->count_all('pelanggan');
+    $data['total_produk'] = $this->db->count_all('produk');
 
-            $this->load->view('templates/header');
-            $this->load->view('templates/sidebar');
-            $this->load->view('templates/topbar');
-            $this->load->view('dashboard/manager', $data);
-            $this->load->view('templates/footer');
+    $data['total_pelanggan'] = $this->db->count_all('pelanggan');
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('templates/topbar');
+    $this->load->view('dashboard/sales', $data);
+    $this->load->view('templates/footer');
+
+
+       }elseif($role == 'manager'){
+
+    $data['total_order']     = $this->db->count_all('sales_order');
+    $data['total_produk']    = $this->db->count_all('produk');
+    $data['total_pelanggan'] = $this->db->count_all('pelanggan');
+    $data['total_user']      = $this->db->count_all('users');
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('templates/topbar');
+    $this->load->view('dashboard/manager', $data);
+    $this->load->view('templates/footer');
 
         }else{
             redirect('login');

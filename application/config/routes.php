@@ -56,3 +56,22 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login']='auth';
 $route['login/proses']='auth/login';
 $route['logout']= 'auth/logout';
+## produk
+$route['produk'] = 'produk';
+$route['produk/tambah'] = 'produk/tambah';
+$route['produk/edit/(:num)'] = 'produk/edit/$1';
+$route['produk/hapus/(:num)'] = 'produk/hapus/$1';
+## pelanggan
+$route['pelanggan'] = 'pelanggan';
+$route['pelanggan/tambah'] = 'pelanggan/tambah';
+$route['pelanggan/edit/(:num)'] = 'pelanggan/edit/$1';
+$route['pelanggan/hapus/(:num)'] = 'pelanggan/hapus/$1';
+## manajemen users
+$route['manajemen_users'] = 'manajemen_users';
+$route['manajemen_users/tambah'] = 'manajemen_users/tambah';
+$route['manajemen_users/edit/(:num)'] = 'manajemen_users/edit/$1';
+$route['manajemen_users/hapus/(:num)'] = 'manajemen_users/hapus/$1';
+## sales order
+$route['sales_order'] = 'sales_order';
+$route['sales_order/tambah'] = 'sales_order/tambah';
+$route['sales_order/detail/(:num)'] = 'sales_order/detail/$1';

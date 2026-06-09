@@ -36,7 +36,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="<?= site_url('users') ?>">
+        <a class="nav-link" href="<?= site_url('manajemen_users') ?>">
             <i class="fas fa-fw fa-user-shield"></i>
             <span>Manajemen User</span>
         </a>

@@ -4,263 +4,170 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PT Maju Jaya – Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        :root {
-            --ink:      #0d0d0d;
-            --ink-60:   rgba(13,13,13,0.6);
-            --ink-20:   rgba(13,13,13,0.12);
-            --ink-08:   rgba(13,13,13,0.06);
-            --paper:    #f5f4f0;
-            --white:    #ffffff;
-            --accent:   #1a1a1a;
-            --line:     rgba(13,13,13,0.15);
-        }
-
-        html, body {
-            height: 100%;
+        body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--paper);
-            color: var(--ink);
-            overflow: hidden;
-        }
-
-        /* ── GRID BACKGROUND ── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(var(--ink-08) 1px, transparent 1px),
-                linear-gradient(90deg, var(--ink-08) 1px, transparent 1px);
-            background-size: 48px 48px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ── DECORATIVE CIRCLE ── */
-        .deco-circle {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            border: 1px solid var(--line);
-            top: -200px;
-            left: -100px;
-            pointer-events: none;
-            z-index: 0;
-            animation: spin 40s linear infinite;
-        }
-        .deco-circle::after {
-            content: '';
-            position: absolute;
-            inset: 60px;
-            border-radius: 50%;
-            border: 1px solid var(--ink-20);
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .deco-line {
-            position: fixed;
-            bottom: 0; right: 0;
-            width: 50vw; height: 50vh;
-            border-top: 1px solid var(--line);
-            border-left: 1px solid var(--line);
-            border-radius: 100% 0 0 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ── LAYOUT ── */
-        .wrapper {
-            position: relative;
-            z-index: 1;
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            background: #f5f4f0;
         }
 
         /* ── LEFT PANEL ── */
-        .panel-left {
+        .left-panel {
+            width: 400px;
+            flex-shrink: 0;
+            background: #0d0d0d;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 56px 64px;
-            border-right: 1px solid var(--line);
+            padding: 48px 48px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .brand {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+        /* subtle circle deco */
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            width: 320px; height: 320px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.05);
+            bottom: -100px; right: -100px;
+            pointer-events: none;
         }
-        .brand-label {
-            font-size: 10px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-60);
-            font-weight: 400;
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.04);
+            bottom: -20px; right: -20px;
+            pointer-events: none;
         }
+
         .brand-name {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 600;
-            line-height: 1.15;
+            color: #fff;
             letter-spacing: -0.01em;
+            line-height: 1.1;
         }
         .brand-sub {
             font-size: 11px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--ink-60);
             font-weight: 300;
-            margin-top: 2px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            margin-top: 8px;
         }
 
-        .hero-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 48px 0;
-        }
-        .hero-kicker {
-            font-size: 10px;
-            letter-spacing: 0.24em;
-            text-transform: uppercase;
-            color: var(--ink-60);
-            margin-bottom: 20px;
-        }
-        .hero-headline {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(40px, 5vw, 68px);
-            font-weight: 300;
-            line-height: 1.08;
-            letter-spacing: -0.02em;
-        }
-        .hero-headline em {
-            font-style: italic;
-            font-weight: 300;
-        }
-        .hero-divider {
-            width: 40px;
-            height: 1px;
-            background: var(--ink);
-            margin: 28px 0;
-        }
-        .hero-desc {
-            font-size: 13px;
-            color: var(--ink-60);
-            line-height: 1.7;
-            max-width: 320px;
-            font-weight: 300;
-        }
-
-        .panel-footer {
-            font-size: 10px;
-            color: var(--ink-60);
-            letter-spacing: 0.08em;
+        .left-footer {
+            font-size: 10.5px;
+            color: rgba(255,255,255,0.20);
+            letter-spacing: 0.04em;
         }
 
         /* ── RIGHT PANEL ── */
-        .panel-right {
+        .right-panel {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 56px 64px;
+            padding: 48px 40px;
+            background: #f5f4f0;
         }
 
-        .login-card {
+        .login-box {
             width: 100%;
-            max-width: 400px;
-            animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+            max-width: 380px;
+            animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;
         }
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
+            from { opacity: 0; transform: translateY(18px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
         .login-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 6px;
+            color: #0d0d0d;
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
         }
         .login-subtitle {
-            font-size: 12px;
-            color: var(--ink-60);
-            letter-spacing: 0.06em;
-            margin-bottom: 40px;
+            font-size: 12.5px;
+            color: rgba(13,13,13,0.45);
+            margin-bottom: 32px;
             font-weight: 300;
         }
 
-        /* ── FLASH ERROR ── */
+        /* flash error */
         .flash-error {
             display: flex;
             align-items: center;
             gap: 10px;
-            background: var(--ink);
-            color: var(--paper);
-            font-size: 12px;
-            padding: 12px 16px;
-            border-radius: 2px;
-            margin-bottom: 24px;
-            letter-spacing: 0.04em;
-            animation: fadeUp 0.4s ease both;
-        }
-        .flash-error svg { flex-shrink: 0; }
-
-        /* ── FORM ── */
-        .field {
-            position: relative;
+            background: rgba(122,26,26,0.07);
+            border: 1px solid rgba(122,26,26,0.18);
+            color: #7a1a1a;
+            font-size: 12.5px;
+            font-weight: 400;
+            padding: 11px 14px;
             margin-bottom: 20px;
         }
+
+        /* fields */
+        .field { margin-bottom: 16px; }
         .field label {
             display: block;
             font-size: 10px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-60);
-            margin-bottom: 8px;
             font-weight: 400;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(13,13,13,0.45);
+            margin-bottom: 8px;
         }
         .field input {
             width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--line);
-            padding: 10px 0;
+            background: #fff;
+            border: 1px solid rgba(13,13,13,0.12);
+            border-radius: 0;
+            padding: 11px 14px;
             font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
-            color: var(--ink);
+            font-size: 13.5px;
+            color: #0d0d0d;
             outline: none;
-            transition: border-color 0.25s;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .field input::placeholder { color: var(--ink-20); }
-        .field input:focus { border-color: var(--ink); }
+        .field input::placeholder { color: rgba(13,13,13,0.20); }
+        .field input:focus {
+            border-color: #0d0d0d;
+            box-shadow: none;
+        }
 
-        /* eye toggle */
+        .pw-wrap { position: relative; }
+        .pw-wrap input { padding-right: 42px; }
         .eye-btn {
             position: absolute;
-            right: 0; bottom: 10px;
+            right: 12px; top: 50%;
+            transform: translateY(-50%);
             background: none; border: none;
-            cursor: pointer;
-            color: var(--ink-60);
-            padding: 0;
-            line-height: 1;
+            cursor: pointer; padding: 0;
+            color: rgba(13,13,13,0.25);
             transition: color 0.2s;
+            line-height: 1;
         }
-        .eye-btn:hover { color: var(--ink); }
+        .eye-btn:hover { color: #0d0d0d; }
 
-        /* ── REMEMBER + EXTRAS ── */
         .form-extras {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 24px 0 32px;
+            margin: 8px 0 24px;
         }
         .remember {
             display: flex;
@@ -268,121 +175,86 @@
             gap: 8px;
             cursor: pointer;
         }
-        .remember input[type="checkbox"] { display: none; }
-        .checkbox-box {
-            width: 14px; height: 14px;
-            border: 1px solid var(--line);
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s, border-color 0.2s;
-            flex-shrink: 0;
+        .remember input[type="checkbox"] {
+            width: 13px; height: 13px;
+            accent-color: #0d0d0d;
+            cursor: pointer;
         }
-        .remember input:checked + .checkbox-box {
-            background: var(--ink);
-            border-color: var(--ink);
-        }
-        .checkbox-icon { display: none; }
-        .remember input:checked ~ .checkbox-icon { display: block; }
         .remember span {
             font-size: 12px;
-            color: var(--ink-60);
-            letter-spacing: 0.04em;
+            color: rgba(13,13,13,0.55);
+            font-weight: 400;
         }
         .forgot-link {
-            font-size: 11px;
-            color: var(--ink-60);
+            font-size: 12px;
+            color: rgba(13,13,13,0.45);
             text-decoration: none;
-            letter-spacing: 0.08em;
-            border-bottom: 1px solid transparent;
+            border-bottom: 1px solid rgba(13,13,13,0.20);
+            padding-bottom: 1px;
             transition: color 0.2s, border-color 0.2s;
         }
-        .forgot-link:hover { color: var(--ink); border-color: var(--ink); }
+        .forgot-link:hover {
+            color: #0d0d0d;
+            border-color: #0d0d0d;
+        }
 
-        /* ── SUBMIT BUTTON ── */
         .btn-login {
             width: 100%;
-            background: var(--ink);
-            color: var(--paper);
+            background: #0d0d0d;
+            color: #fff;
             border: none;
-            padding: 16px;
+            border-radius: 0;
+            padding: 13px;
             font-family: 'DM Sans', sans-serif;
             font-size: 11px;
-            letter-spacing: 0.22em;
+            font-weight: 500;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background 0.25s, transform 0.15s;
-            position: relative;
-            overflow: hidden;
+            transition: background 0.2s, transform 0.15s;
         }
-        .btn-login::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: white;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .btn-login:hover { background: #333; }
+        .btn-login:hover { background: #1a3a6b; }
         .btn-login:active { transform: scale(0.99); }
 
-        /* ── REGISTER LINK ── */
         .register-row {
             text-align: center;
-            margin-top: 24px;
             font-size: 12px;
-            color: var(--ink-60);
+            color: rgba(13,13,13,0.40);
+            margin-top: 18px;
         }
         .register-row a {
-            color: var(--ink);
-            text-decoration: none;
+            color: #0d0d0d;
             font-weight: 500;
-            border-bottom: 1px solid var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(13,13,13,0.30);
             padding-bottom: 1px;
-            transition: opacity 0.2s;
         }
-        .register-row a:hover { opacity: 0.6; }
+        .register-row a:hover { border-color: #0d0d0d; }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-            .wrapper { grid-template-columns: 1fr; }
-            .panel-left { display: none; }
-            .panel-right { padding: 40px 28px; align-items: flex-start; padding-top: 80px; }
-            .login-card { max-width: 100%; }
+        @media (max-width: 720px) {
+            .left-panel { display: none; }
         }
     </style>
 </head>
 <body>
 
-<div class="deco-circle"></div>
-<div class="deco-line"></div>
-
-<div class="wrapper">
-
     <!-- LEFT -->
-    <div class="panel-left">
-        <div class="brand">
-            <span class="brand-label">Sistem Sales Order</span>
-            <span class="brand-name">PT Maju Jaya</span>
-            <span class="brand-sub">Distribusi Alat Elektronik</span>
+    <div class="left-panel">
+        <div>
+            <p class="brand-name">PT Maju Jaya</p>
+            <p class="brand-sub">Sales Order System</p>
         </div>
-
-        <div class="hero-text">
-            <p class="hero-kicker">Platform Manajemen Penjualan</p>
-            <h1 class="hero-headline">Efisien.<br><em>Akurat.</em><br>Terpadu.</h1>
-            <div class="hero-divider"></div>
-            <p class="hero-desc">Kelola sales order, produk, dan pelanggan dalam satu platform terintegrasi. Dirancang untuk tim sales yang dinamis.</p>
-        </div>
-
-        <p class="panel-footer">&copy; <?= date('Y') ?> PT Maju Jaya &nbsp;·&nbsp; All rights reserved</p>
+        <p class="left-footer">&copy; <?= date('Y') ?> PT Maju Jaya</p>
     </div>
 
     <!-- RIGHT -->
-    <div class="panel-right">
-        <div class="login-card">
+    <div class="right-panel">
+        <div class="login-box">
 
             <h2 class="login-title">Masuk</h2>
-            <p class="login-subtitle">Selamat datang kembali — masukkan kredensial Anda</p>
+            <p class="login-subtitle">Silakan login untuk melanjutkan</p>
 
-            <?php if($this->session->flashdata('error')): ?>
+            <?php if ($this->session->flashdata('error')): ?>
             <div class="flash-error">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                 <?= $this->session->flashdata('error') ?>
@@ -394,38 +266,42 @@
                 <div class="field">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username"
-                           placeholder="Masukkan username Anda"
-                           value="<?= set_value('username') ?>" required autocomplete="username">
+                           placeholder="Masukkan username"
+                           value="<?= set_value('username') ?>"
+                           required autocomplete="username">
                 </div>
 
                 <div class="field">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password"
-                           placeholder="••••••••" required autocomplete="current-password">
-                    <button type="button" class="eye-btn" onclick="togglePwd(this)" aria-label="Tampilkan password">
-                        <svg id="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    </button>
+                    <div class="pw-wrap">
+                        <input type="password" id="password" name="password"
+                               placeholder="Masukkan password"
+                               required autocomplete="current-password">
+                        <button type="button" class="eye-btn" onclick="togglePwd(this)">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-extras">
                     <label class="remember">
-                        <input type="checkbox" name="remember" id="remember">
-                        <span class="checkbox-box"></span>
-                        <svg class="checkbox-icon" style="position:absolute;pointer-events:none;margin-left:1px" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>
+                        <input type="checkbox" name="remember">
                         <span>Ingat saya</span>
                     </label>
                     <a href="<?= base_url('auth/forgot') ?>" class="forgot-link">Lupa Password?</a>
                 </div>
 
-                <button type="submit" class="btn-login">Masuk ke Sistem</button>
+                <button type="submit" class="btn-login">Login</button>
 
             <?= form_close() ?>
 
-            <p class="register-row">Belum punya akun? <a href="<?= base_url('auth/register') ?>">Daftar sekarang</a></p>
+            <p class="register-row">Belum punya akun? <a href="<?= base_url('auth/register') ?>">Daftar</a></p>
+
         </div>
     </div>
-
-</div>
 
 <script>
 function togglePwd(btn) {
@@ -436,14 +312,6 @@ function togglePwd(btn) {
         ? '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
         : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
 }
-
-// checkbox SVG fix — keep icon aligned
-document.querySelectorAll('.remember input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', function() {
-        const icon = this.parentElement.querySelector('.checkbox-icon');
-        icon.style.display = this.checked ? 'block' : 'none';
-    });
-});
 </script>
 </body>
 </html>
