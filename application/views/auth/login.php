@@ -28,23 +28,45 @@
             overflow: hidden;
         }
 
-        /* subtle circle deco */
+        /* segitiga geometrik */
         .left-panel::before {
             content: '';
             position: absolute;
-            width: 320px; height: 320px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.05);
-            bottom: -100px; right: -100px;
+            bottom: 0; right: 0;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 0 0 420px 400px;
+            border-color: transparent transparent rgba(255,255,255,0.045) transparent;
             pointer-events: none;
         }
+        /* diagonal line overlay via pseudo after */
         .left-panel::after {
             content: '';
             position: absolute;
-            width: 180px; height: 180px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.04);
-            bottom: -20px; right: -20px;
+            bottom: 0; right: 0;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 0 0 240px 400px;
+            border-color: transparent transparent rgba(255,255,255,0.025) transparent;
+            pointer-events: none;
+        }
+
+        /* garis diagonal SVG digantikan oleh elemen .panel-line */
+        .panel-line {
+            position: absolute;
+            top: 0; bottom: 0;
+            right: 80px;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.10) 25%, rgba(255,255,255,0.10) 75%, transparent);
+            pointer-events: none;
+        }
+
+        /* diagonal stroke line */
+        .panel-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
         }
 
@@ -63,6 +85,28 @@
             text-transform: uppercase;
             color: rgba(255,255,255,0.35);
             margin-top: 8px;
+        }
+
+        .left-tagline {
+            position: absolute;
+            bottom: 80px;
+            left: 48px;
+            right: 100px;
+        }
+        .left-tagline::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: rgba(255,255,255,0.25);
+            margin-bottom: 14px;
+        }
+        .left-tagline p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14.5px;
+            font-style: italic;
+            color: rgba(255,255,255,0.40);
+            line-height: 1.7;
         }
 
         .left-footer {
@@ -240,10 +284,25 @@
 
     <!-- LEFT -->
     <div class="left-panel">
+
+        <!-- diagonal stroke line -->
+        <svg class="panel-svg" viewBox="0 0 400 100%" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="100%" x2="400" y2="0" stroke="rgba(255,255,255,0.13)" stroke-width="1"/>
+        </svg>
+
+        <!-- garis vertikal -->
+        <div class="panel-line"></div>
+
         <div>
             <p class="brand-name">PT Maju Jaya</p>
             <p class="brand-sub">Sales Order System</p>
         </div>
+
+        <!-- tagline posisi seperti D -->
+        <div class="left-tagline">
+            <p>Distribusi elektronik terpercaya, dikelola dengan sistem yang efisien.</p>
+        </div>
+
         <p class="left-footer">&copy; <?= date('Y') ?> PT Maju Jaya</p>
     </div>
 
