@@ -3,19 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Laporan extends CI_Controller {
 
-    public function __construct()
-    {
-        parent::__construct();
+public function __construct()
+{
+    parent::__construct();
 
-        if(!$this->session->userdata('login')){
-            redirect('login');
-        }
-
-        if($this->session->userdata('role') != 'manager'){
-            redirect('dashboard');
-        }
+    if(!$this->session->userdata('login')){
+        redirect('login');
     }
 
+    // Admin dan manager yang bisa akses laporan
+    if(!in_array($this->session->userdata('role'), ['admin', 'manager'])){
+        redirect('dashboard');
+        }
+    }
     public function penjualan()
     {
         $tanggal_awal  = $this->input->get('tanggal_awal');
@@ -91,22 +91,28 @@ class Laporan extends CI_Controller {
 
 public function sales()
 {
+    $tanggal_awal  = $this->input->get('tanggal_awal');
+    $tanggal_akhir = $this->input->get('tanggal_akhir');
+
     $this->db->select('
         users.nama,
         COUNT(sales_order.id_order) as jumlah_order,
         SUM(sales_order.total_harga) as total_penjualan
     ');
-
     $this->db->from('sales_order');
+    $this->db->join('users', 'users.id = sales_order.id_sales');
+    $this->db->where('sales_order.status', 'selesai');
 
-    $this->db->join(
-        'users',
-        'users.id = sales_order.id_sales'
-    );
+    if(!empty($tanggal_awal) && !empty($tanggal_akhir)){
+        $this->db->where('sales_order.tanggal >=', $tanggal_awal);
+        $this->db->where('sales_order.tanggal <=', $tanggal_akhir);
+    }
 
     $this->db->group_by('sales_order.id_sales');
 
-    $data['laporan'] = $this->db->get()->result();
+    $data['laporan']       = $this->db->get()->result();
+    $data['tanggal_awal']  = $tanggal_awal;
+    $data['tanggal_akhir'] = $tanggal_akhir;
 
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
@@ -139,23 +145,29 @@ public function cetak_produk()
 
 public function cetak_sales()
 {
+    $tanggal_awal  = $this->input->get('tanggal_awal');
+    $tanggal_akhir = $this->input->get('tanggal_akhir');
+
     $this->db->select('
         users.nama,
         COUNT(sales_order.id_order) as jumlah_order,
         SUM(sales_order.total_harga) as total_penjualan
     ');
-
     $this->db->from('sales_order');
+    $this->db->join('users', 'users.id = sales_order.id_sales');
+    $this->db->where('sales_order.status', 'selesai');
 
-    $this->db->join(
-        'users',
-        'users.id = sales_order.id_sales'
-    );
+    if(!empty($tanggal_awal) && !empty($tanggal_akhir)){
+        $this->db->where('sales_order.tanggal >=', $tanggal_awal);
+        $this->db->where('sales_order.tanggal <=', $tanggal_akhir);
+    }
 
     $this->db->group_by('sales_order.id_sales');
 
-    $data['laporan'] = $this->db->get()->result();
+    $data['laporan']       = $this->db->get()->result();
+    $data['tanggal_awal']  = $tanggal_awal;
+    $data['tanggal_akhir'] = $tanggal_akhir;
 
     $this->load->view('laporan/cetak_sales', $data);
 }
-    }
+}

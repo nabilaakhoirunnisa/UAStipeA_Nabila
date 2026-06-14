@@ -20,9 +20,7 @@
     </div>
 
     <div class="card-body">
-
         <div class="table-responsive">
-
             <table class="table table-bordered" id="dataTable">
 
                 <thead>
@@ -31,47 +29,53 @@
                         <th>Nama Pelanggan</th>
                         <th>Alamat</th>
                         <th>Telepon</th>
+                        <th class="text-center">Jml Order</th>
+                        <th>Total Pembelian</th>
                         <th width="180">Aksi</th>
                     </tr>
                 </thead>
 
                 <tbody>
-
-                    <?php
-                    $no = 1;
-                    foreach($pelanggan as $p):
-                    ?>
-
+                    <?php $no = 1; foreach($pelanggan as $p): ?>
                     <tr>
                         <td><?= $no++; ?></td>
                         <td><?= $p->nama_pelanggan; ?></td>
                         <td><?= $p->alamat; ?></td>
                         <td><?= $p->telepon; ?></td>
 
-                        <td>
+                        <td class="text-center">
+                            <?php if($p->jumlah_order > 0): ?>
+                                <span class="badge badge-dark"><?= $p->jumlah_order ?></span>
+                            <?php else: ?>
+                                <span class="text-muted">—</span>
+                            <?php endif; ?>
+                        </td>
 
+                        <td>
+                            <?php if($p->total_pembelian > 0): ?>
+                                <strong>Rp <?= number_format($p->total_pembelian, 0, ',', '.') ?></strong>
+                            <?php else: ?>
+                                <span class="text-muted">Belum ada order</span>
+                            <?php endif; ?>
+                        </td>
+
+                        <td>
                             <a href="<?= base_url('pelanggan/edit/'.$p->id_pelanggan); ?>"
                                class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-
                             <a href="<?= base_url('pelanggan/hapus/'.$p->id_pelanggan); ?>"
                                class="btn btn-danger btn-sm"
                                onclick="return confirm('Yakin ingin menghapus data ini?')">
                                 <i class="fas fa-trash"></i> Hapus
                             </a>
-
                         </td>
                     </tr>
-
                     <?php endforeach; ?>
-
                 </tbody>
 
             </table>
-
         </div>
-
     </div>
 
 </div>

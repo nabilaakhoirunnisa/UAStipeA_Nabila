@@ -3,14 +3,6 @@
 <p class="page-sub">Administrator &nbsp;/&nbsp; PT Maju Jaya</p>
 <h1 class="page-title mb-4">Dashboard</h1>
 
-<?php
-$total_penjualan = $this->db
-    ->select_sum('total_harga')
-    ->get('sales_order')
-    ->row()
-    ->total_harga;
-?>
-
 <!-- STAT CARD -->
 <div class="row mb-4">
 
@@ -53,10 +45,10 @@ $total_penjualan = $this->db
                 <i class="fas fa-money-bill-wave"></i>
             </div>
             <p class="stat-label">Total Penjualan</p>
-            <p class="stat-number">
-                Rp <?= number_format($total_penjualan,0,',','.') ?>
+            <p class="stat-number" style="font-size:22px;padding-top:8px;">
+                Rp <?= number_format($total_penjualan_selesai,0,',','.') ?>
             </p>
-            <p class="stat-sub">Akumulasi transaksi</p>
+            <p class="stat-sub">Order selesai</p>
         </div>
     </div>
 
@@ -69,7 +61,6 @@ $total_penjualan = $this->db
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Sales Order Terbaru</span>
-
                 <a href="<?= site_url('sales_order') ?>"
                    style="font-size:12px;text-decoration:none">
                     Lihat Semua →
@@ -77,7 +68,6 @@ $total_penjualan = $this->db
             </div>
 
             <div class="card-body p-0">
-
                 <table class="table mb-0">
                     <thead>
                         <tr>
@@ -91,7 +81,6 @@ $total_penjualan = $this->db
                     </thead>
 
                     <tbody>
-
                     <?php
                     $orders = $this->db
                         ->select('so.id_order,p.nama_pelanggan,u.nama as nama_sales,so.tanggal,so.total_harga,so.status')
@@ -106,46 +95,24 @@ $total_penjualan = $this->db
                     if($orders):
                         foreach($orders as $o):
                     ?>
-
                         <tr>
-                            <td>
-                                #SO-<?= str_pad($o->id_order,4,'0',STR_PAD_LEFT) ?>
-                            </td>
-
+                            <td>#SO-<?= str_pad($o->id_order,4,'0',STR_PAD_LEFT) ?></td>
                             <td><?= $o->nama_pelanggan ?></td>
-
                             <td><?= $o->nama_sales ?></td>
-
-                            <td>
-                                <?= date('d M Y',strtotime($o->tanggal)) ?>
-                            </td>
-
-                            <td>
-                                Rp <?= number_format($o->total_harga,0,',','.') ?>
-                            </td>
-
-                            <td>
-                                <?= ucfirst($o->status) ?>
-                            </td>
+                            <td><?= date('d M Y',strtotime($o->tanggal)) ?></td>
+                            <td>Rp <?= number_format($o->total_harga,0,',','.') ?></td>
+                            <td><?= ucfirst($o->status) ?></td>
                         </tr>
-
                     <?php
                         endforeach;
                     else:
                     ?>
-
                         <tr>
-                            <td colspan="6" class="text-center">
-                                Belum ada data sales order
-                            </td>
+                            <td colspan="6" class="text-center">Belum ada data sales order</td>
                         </tr>
-
                     <?php endif; ?>
-
                     </tbody>
-
                 </table>
-
             </div>
         </div>
     </div>
@@ -154,15 +121,9 @@ $total_penjualan = $this->db
     <div class="col-xl-4">
 
         <div class="card mb-3">
-
-            <div class="card-header">
-                Ringkasan Status Order
-            </div>
-
+            <div class="card-header">Ringkasan Status Order</div>
             <div class="card-body">
-
                 <?php
-
                 $statuses = [
                     'draft'      => 'Draft',
                     'diproses'   => 'Diproses',
@@ -170,61 +131,91 @@ $total_penjualan = $this->db
                     'selesai'    => 'Selesai',
                     'dibatalkan' => 'Dibatalkan'
                 ];
-
                 foreach($statuses as $key => $label):
-
-                    $jumlah = $this->db
-                        ->where('status',$key)
-                        ->count_all_results('sales_order');
+                    $jumlah = $this->db->where('status',$key)->count_all_results('sales_order');
                 ?>
-
                 <div class="d-flex justify-content-between mb-2">
                     <span><?= $label ?></span>
                     <strong><?= $jumlah ?></strong>
                 </div>
-
                 <?php endforeach; ?>
-
             </div>
-        </div>
-
-        <div class="card">
-
-            <div class="card-header">
-                Informasi Sistem
-            </div>
-
-            <div class="card-body">
-
-                <p>
-                    <strong>Nama Sistem</strong><br>
-                    Sales Order System
-                </p>
-
-                <p>
-                    <strong>Perusahaan</strong><br>
-                    PT Maju Jaya
-                </p>
-
-                <p>
-                    <strong>Total Produk</strong><br>
-                    <?= $total_produk ?>
-                </p>
-
-                <p>
-                    <strong>Total Pelanggan</strong><br>
-                    <?= $total_pelanggan ?>
-                </p>
-
-                <p>
-                    <strong>Total Order</strong><br>
-                    <?= $total_order ?>
-                </p>
-
-            </div>
-
         </div>
 
     </div>
 
 </div>
+
+<!-- GRAFIK PENJUALAN -->
+<div class="row mt-2">
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Grafik Penjualan 7 Hari Terakhir</span>
+                <span style="font-size:11px;color:rgba(13,13,13,0.35)">Tidak termasuk order dibatalkan</span>
+            </div>
+            <div class="card-body" style="padding:20px 24px;">
+                <canvas id="grafikPenjualan" height="80"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Tunggu sampai semua script (termasuk Chart.js di footer) selesai diload
+window.addEventListener('load', function(){
+    var labels = <?= $grafik_labels ?>;
+    var values = <?= $grafik_data ?>;
+
+    var ctx = document.getElementById('grafikPenjualan').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Total Penjualan (Rp)',
+                data: values,
+                backgroundColor: 'rgba(13,13,13,0.08)',
+                borderColor: 'rgba(13,13,13,0.55)',
+                borderWidth: 1.5,
+                hoverBackgroundColor: 'rgba(13,13,13,0.18)'
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: { display: false },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function(v){
+                            if(v === 0) return 'Rp 0';
+                            return 'Rp ' + v.toLocaleString('id-ID');
+                        },
+                        fontColor: 'rgba(13,13,13,0.40)',
+                        fontSize: 11
+                    },
+                    gridLines: {
+                        color: 'rgba(13,13,13,0.06)',
+                        zeroLineColor: 'rgba(13,13,13,0.15)'
+                    }
+                }],
+                xAxes: [{
+                    ticks: { fontColor: 'rgba(13,13,13,0.40)', fontSize: 11 },
+                    gridLines: { display: false }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(item){
+                        return 'Rp ' + parseInt(item.yLabel).toLocaleString('id-ID');
+                    }
+                },
+                backgroundColor: '#0d0d0d',
+                titleFontSize: 11,
+                bodyFontSize: 12
+            }
+        }
+    });
+});
+</script>

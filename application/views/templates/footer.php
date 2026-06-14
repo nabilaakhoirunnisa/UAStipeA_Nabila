@@ -24,35 +24,6 @@
     });
 });
 </script>
-<script>
-    var ctx= document.getElementById("chartDashboard");
-    var chart= new Chart(ctx,{
-        type:'polarArea',
-        data:{
-            labels:['Jumlah Data', 'Anggota'],
-            datasets:[{
-            label:'Jumlah Data',
-            data:[
-                <?= $total_kategori; ?>,
-                <?= $total_anggota; ?>
-            ],
-            backgroundColor:[
-                '#df4ed3',
-                '#1cc88a'
-            ]
-        }]
-    },
-    options:{
-         responsive: true,
-         scales:{
-              yAxes:[{
-                ticks:{
-                    beginAtZero: true
-                   }
-             }]
-           }
-        }
-    });
-    </script>
+
 </body>
 </html>
